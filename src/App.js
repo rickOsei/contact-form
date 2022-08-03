@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import FormFunc from "./components/FormFunc";
+import AllUsers from "./components/AllUsers";
+import { Container, Row, Col } from "react-bootstrap";
 
 function App() {
+  const [contact, setContact] = useState([]);
+
+  const addContacts = (contacts) => {
+    setContact((prev) => {
+      return [...prev, contacts];
+    });
+  };
+
+  const deleteContact = (id) => {
+    setContact((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  const editContact = (id, newDetails) => {
+    setContact((prev) =>
+      prev.map((item) => {
+        if (item.id === id) return newDetails;
+        return item;
+      })
+    );
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          <FormFunc addContacts={addContacts} />
+        </Col>
+        <Col>
+          <AllUsers
+            contact={contact}
+            deleteContact={deleteContact}
+            editContact={editContact}
+          />
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
