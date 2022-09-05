@@ -19,7 +19,7 @@ function User({ item, deleteContact, editContact }) {
               handleClose={handleClose}
               editContact={editContact}
               item={item}
-            />{" "}
+            />
           </Modal.Body>
         </Modal>
       </>
