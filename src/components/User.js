@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { Card, Button, Modal } from "react-bootstrap";
 import EditUsers from "./EditUsers";
+import { useDispatch } from "react-redux";
+import { deleteUser } from "../reducers/contactReducer";
 
 function User({ item, deleteContact, editContact }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const dispatch = useDispatch(item.id);
+
   return (
     <>
       <>
@@ -32,7 +37,7 @@ function User({ item, deleteContact, editContact }) {
             {item.address}
           </Card.Subtitle>
           <Card.Text>{item.phone}</Card.Text>
-          <Button variant="info" onClick={() => deleteContact(item.id)}>
+          <Button variant="info" onClick={() => dispatch(deleteUser(item.id))}>
             Delete
           </Button>{" "}
           <Button variant="info" onClick={handleShow}>

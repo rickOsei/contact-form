@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { addUsers } from "../reducers/contactReducer";
 
 function FormFunc({ addContacts }) {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setName(e.target.value);
@@ -21,7 +25,8 @@ function FormFunc({ addContacts }) {
     e.preventDefault();
     if (name === "" || address === "" || phone === "") return;
 
-    addContacts(items);
+    // addContacts(items);
+    dispatch(addUsers(items));
 
     // clearing input
     setName("");

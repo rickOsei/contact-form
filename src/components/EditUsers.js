@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { editUser } from "../reducers/contactReducer";
 
 function EditUsers({ handleClose, editContact, item }) {
+  const { id } = item;
+
   const [name, setName] = useState(item.name);
   const [address, setAddress] = useState(item.address);
   const [phone, setPhone] = useState(item.phone);
+
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setName(e.target.value);
@@ -20,7 +26,8 @@ function EditUsers({ handleClose, editContact, item }) {
 
     e.preventDefault();
 
-    editContact(item.id, items);
+    // editContact(item.id, items);
+    dispatch(editUser(id, items));
     handleClose();
 
     // clearing input
