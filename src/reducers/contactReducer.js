@@ -27,7 +27,7 @@ const contactReducer = (state = initialState, action) => {
     case "ADD_USERS":
       return {
         ...state,
-        contacts: [...state.contacts, action.payload],
+        contacts: action.payload,
       };
     case "DELETE_ITEM":
       return {

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { addUsers } from "../reducers/contactReducer";
+import { doc, setDoc, collection, addDoc, getDocs } from "firebase/firestore";
+import { db } from "./firebase/config";
 
 function FormFunc({ addContacts }) {
   const [name, setName] = useState("");
@@ -14,19 +16,55 @@ function FormFunc({ addContacts }) {
     setName(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  // // collection reference
+  // const colRef = collection(db, "contact_forms");
+
+  // //get collection data
+  // getDocs(colRef)
+  //   .then((snapshot) => {
+  //     let contacts = [];
+  //     snapshot.docs.forEach((doc) => {
+  //       contacts.push({ ...doc.data(), id: doc.id });
+  //     });
+  //     console.log(contacts);
+  //   })
+  //   .catch((err) => console.log(err));
+
+  // const handleSubmit = () => {
+  //   const items = {
+  //     name: name,
+  //     address: address,
+  //     phone: phone,
+  //     id: Math.floor(Math.random() * 1000),
+  //   };
+
+  //   addDoc(colRef, items).then(() => {
+  //     name.reset();
+  //     address.reset();
+  //     phone.reset();
+  //   });
+  // };
+
+  const handleSubmit = async (e) => {
     const items = {
       name: name,
       address: address,
       phone: phone,
-      id: Math.floor(Math.random() * 1000),
+      id: new Date().getTime().toLocaleString(),
     };
 
     e.preventDefault();
     if (name === "" || address === "" || phone === "") return;
 
+    try {
+      // const docRef = await addDoc(collection(db, "contact_forms"), items);
+      const docRef = await setDoc(doc(db, "contacts", items.id), items);
+    } catch (error) {
+      console.log(error);
+    }
+
     // addContacts(items);
-    dispatch(addUsers(items));
+    // dispatch(addUsers(items));
 
     // clearing input
     setName("");

@@ -9,10 +9,10 @@ function AllUsers({ contact, deleteContact, editContact }) {
   console.log(contacts);
   return (
     <>
-      {contacts.map((item) => {
+      {contacts.map((item, index) => {
         return (
           <User
-            key={item.id}
+            key={index}
             item={item}
             deleteContact={deleteContact}
             editContact={editContact}
