@@ -40,7 +40,6 @@ function App() {
         querySnapshot.forEach((doc) => {
           newUsersArr.push(doc.data());
         });
-        console.log(newUsersArr);
         dispatch(addUsers(newUsersArr));
       });
     };

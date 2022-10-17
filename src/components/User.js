@@ -3,6 +3,8 @@ import { Card, Button, Modal } from "react-bootstrap";
 import EditUsers from "./EditUsers";
 import { useDispatch } from "react-redux";
 import { deleteUser } from "../reducers/contactReducer";
+import { doc, deleteDoc } from "firebase/firestore";
+import { db } from "./firebase/config";
 
 function User({ item, deleteContact, editContact }) {
   const [show, setShow] = useState(false);
@@ -10,7 +12,11 @@ function User({ item, deleteContact, editContact }) {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const dispatch = useDispatch(item.id);
+  const dispatch = useDispatch();
+
+  const handleDelete = async () => {
+    await deleteDoc(doc(db, "contacts", item.id));
+  };
 
   return (
     <>
@@ -37,7 +43,7 @@ function User({ item, deleteContact, editContact }) {
             {item.address}
           </Card.Subtitle>
           <Card.Text>{item.phone}</Card.Text>
-          <Button variant="info" onClick={() => dispatch(deleteUser(item.id))}>
+          <Button variant="info" onClick={handleDelete}>
             Delete
           </Button>{" "}
           <Button variant="info" onClick={handleShow}>

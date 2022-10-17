@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { editUser } from "../reducers/contactReducer";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "./firebase/config";
 
 function EditUsers({ handleClose, editContact, item }) {
   const { id } = item;
@@ -16,24 +18,24 @@ function EditUsers({ handleClose, editContact, item }) {
     setName(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     const items = {
       name: name,
       address: address,
       phone: phone,
-      id: Math.floor(Math.random() * 1000),
+      id: item.id,
     };
 
     e.preventDefault();
 
     // editContact(item.id, items);
-    dispatch(editUser(id, items));
-    handleClose();
+    // dispatch(editUser(id, items));
 
-    // clearing input
-    setName("");
-    setAddress("");
-    setPhone("");
+    const contactRef = doc(db, "contacts", item.id);
+
+    await updateDoc(contactRef, items);
+
+    handleClose();
   };
   return (
     <>
