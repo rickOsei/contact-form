@@ -64,7 +64,6 @@ function FormFunc({ addContacts }) {
     }
 
     // addContacts(items);
-    // dispatch(addUsers(items));
 
     // clearing input
     setName("");

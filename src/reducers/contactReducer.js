@@ -4,7 +4,7 @@ const initialState = {
 
 // selectors
 export const selectContacts = (state) => {
-  return state.contacts;
+  return state.contact.contacts;
 };
 
 // action creators

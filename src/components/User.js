@@ -15,7 +15,7 @@ function User({ item, deleteContact, editContact }) {
   const dispatch = useDispatch();
 
   const handleDelete = async () => {
-    await deleteDoc(doc(db, "contacts", item.id));
+    await deleteDoc(doc(db, "contacts", "DC"));
   };
 
   return (
